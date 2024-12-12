@@ -40,9 +40,9 @@ def predict():
     })
 
 # Handler function for serverless deployment
-def handler(event, context):
-    return app(event, context)
+##def handler(event, context):
+## return app(event, context)
 
 # Uncomment below if running locally (not needed for serverless)
-# if __name__ == '__main__':
-#     app.run(host='0.0.0.0', port=5000)
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
