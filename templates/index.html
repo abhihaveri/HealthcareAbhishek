@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disease Prediction Tool</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        .radio-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #3e8e41;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Disease Prediction Tool</h2>
+        <form id="prediction-form" method="POST" action="/predict">
+            {% for column in column_names %}
+                <div class="form-group">
+                    <label for="{{ column }}">{{ column }}</label>
+                    <div class="radio-group">
+                        <input type="radio" id="{{ column }}_yes" name="{{ column }}" value="Yes">
+                        <label for="{{ column }}_yes">Yes</label>
+                        <input type="radio" id="{{ column }}_no" name="{{ column }}" value="No" checked>
+                        <label for="{{ column }}_no">No</label>
+                    </div>
+                </div>
+            {% endfor %}
+            <button type="submit" class="btn">Predict</button>
+        </form>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const form = document.getElementById('prediction-form');
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const response = await fetch(form.action, {
+                method: 'POST',
+                body: new FormData(form)
+            });
+            const result = await response.json();
+            document.getElementById('result').innerHTML = `
+                <h3>Predictions:</h3>
+                <p>Random Forest: ${result.rf_prediction}</p>
+                <p>Deep Learning: ${result.dl_prediction}</p>
+            `;
+        });
+    </script>
+</body>
+</html>
