@@ -1,8 +1,7 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify
 import joblib
 import numpy as np
 import tensorflow as tf
-import pandas as pd
 
 app = Flask(__name__)
 
@@ -12,15 +11,9 @@ dl_model = tf.keras.models.load_model('dl_model.h5')
 scaler = joblib.load('scaler.joblib')
 le = joblib.load('label_encoder.joblib')
 
-# Load the dataset
-data = pd.read_csv('symbipredict_2022.csv')
-
-# Load the unique disease names
-disease_names = le.classes_
-
 @app.route('/')
 def home():
-    return render_template('index.html', column_names=data.columns.tolist()[:-1])
+    return "Welcome to the Disease Prediction API!"
 
 @app.route('/predict', methods=['POST'])
 def predict():
@@ -46,8 +39,10 @@ def predict():
         'dl_prediction': dl_pred
     })
 
-##if __name__ == '__main__':
-##    app.run(debug=True)
+# Handler function for serverless deployment
+def handler(event, context):
+    return app(event, context)
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+# Uncomment below if running locally (not needed for serverless)
+# if __name__ == '__main__':
+#     app.run(host='0.0.0.0', port=5000)
