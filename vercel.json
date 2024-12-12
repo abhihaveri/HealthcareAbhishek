@@ -2,19 +2,14 @@
     "version": 2,
     "builds": [
       {
-        "src": "package.json",
-        "use": "@vercel/static-build",
-        "config": {
-          "installCommand": "npm install",
-          "buildCommand": "npm run build",
-          "outputDirectory": "build"
-        }
+        "src": "app.py",
+        "use": "@vercel/python"
       }
     ],
     "routes": [
       {
         "src": "/(.*)",
-        "dest": "build/index.html"
+        "dest": "app.py"
       }
     ]
   }
