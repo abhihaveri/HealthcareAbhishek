@@ -1,8 +1,6 @@
 Flask
-Frozen-Flask
 scikit-learn
 tensorflow
 numpy
 pandas
 joblib
-gunicorn

@@ -47,7 +47,7 @@
         <form id="prediction-form" method="POST" action="/predict">
             {% for column in column_names %}
                 <div class="form-group">
-                    <label for="{{ column }}">{{ column }}</label>
+                    <label for="{{ column }}">{{ column.replace("_", " ").title() }}:</label>
                     <div class="radio-group">
                         <input type="radio" id="{{ column }}_yes" name="{{ column }}" value="Yes">
                         <label for="{{ column }}_yes">Yes</label>

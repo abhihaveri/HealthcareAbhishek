@@ -1,5 +1,16 @@
+##initate the container
 docker-compose build
 docker-compose up -d
+
+##Build Your Docker Image 
+docker build -t my-flask-app .
+###Tag Your Image:
+docker tag my-flask-app:latest kingabhi1992/healthcare:latest
+###Log in to Docker Hub:
+docker login
+##Push Your Tagged Image to Docker Hub:
+docker push kingabhi1992/healthcare:latest
+
 
 
 http://192.168.2.38:5000
