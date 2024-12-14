@@ -1,2 +1,4 @@
 disease[[:space:]]combination[[:space:]]file.txt filter=lfs diff=lfs merge=lfs -text
 disease_symptom_combinations.csv filter=lfs diff=lfs merge=lfs -text
+*.txt filter=lfs diff=lfs merge=lfs -text
+*.csv filter=lfs diff=lfs merge=lfs -text
