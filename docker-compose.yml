@@ -1,4 +1,4 @@
-version: '3.8' # or any other supported version like '3.9', '4.0', etc.
+version: '3.9' # or any other supported version like '3.9', '4.0', etc.
 services:
   app:
     build: .
