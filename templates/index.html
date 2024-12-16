@@ -99,6 +99,18 @@
         #result.show {
             opacity: 1;
         }
+        #selected-symptoms {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+            border-left: 6px solid #3498db;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        #selected-symptoms.show {
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
@@ -124,17 +136,33 @@
             <button type="submit" class="btn">Predict</button>
         </form>
 
+        <div id="selected-symptoms"></div>
         <div id="result"></div>
     </div>
 
     <script>
         const form = document.getElementById('prediction-form');
         const resultDiv = document.getElementById('result');
+        const selectedSymptomsDiv = document.getElementById('selected-symptoms');
+
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
+
+            const formData = new FormData(form);
+            const selectedSymptoms = Array.from(formData.entries())
+                .filter(([key, value]) => value === 'Yes')
+                .map(([key]) => key.replace('_', ' ').title())
+                .join(', ');
+
+            selectedSymptomsDiv.innerHTML = `
+                <h3>Selected Symptoms:</h3>
+                <p>${selectedSymptoms}</p>
+            `;
+            selectedSymptomsDiv.classList.add('show');
+
             const response = await fetch(form.action, {
                 method: 'POST',
-                body: new FormData(form)
+                body: formData
             });
             const result = await response.json();
             resultDiv.innerHTML = `
@@ -146,6 +174,11 @@
             `;
             resultDiv.classList.add('show');
         });
+
+        // Helper function to title case a string
+        String.prototype.title = function() {
+            return this.toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+        };
     </script>
 </body>
 </html>
