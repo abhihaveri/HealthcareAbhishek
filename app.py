@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, jsonify
 import joblib
 import numpy as np
 import tensorflow as tf
+import pandas as pd
 
 app = Flask(__name__)
 
@@ -14,6 +15,10 @@ try:
 except Exception as e:
     print(f"Error loading models: {e}")
     exit(1)
+
+# Load the disease descriptions from Excel
+disease_descriptions = pd.read_excel('disease_description_data.xlsm', index_col='Disease')
+disease_descriptions_dict = disease_descriptions['Description'].to_dict()
 
 # Define the column names from the dataset
 column_names = [
@@ -75,13 +80,19 @@ def predict():
         rf_pred = le.inverse_transform([rf_pred_index])[0]
         dl_pred = le.inverse_transform([dl_pred_index])[0]
 
+        # Get disease descriptions
+        rf_pred_description = disease_descriptions_dict.get(rf_pred, "Description not available")
+        dl_pred_description = disease_descriptions_dict.get(dl_pred, "Description not available")
+
         print("RF Prediction:", rf_pred)
         print("DL Prediction:", dl_pred)
 
         # Return the predictions as JSON
         return jsonify({
             'rf_prediction': rf_pred,
-            'dl_prediction': dl_pred
+            'rf_prediction_description': rf_pred_description,
+            'dl_prediction': dl_pred,
+            'dl_prediction_description': dl_pred_description
         })
     
     except Exception as e:
@@ -89,4 +100,4 @@ def predict():
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=8080, debug=True)

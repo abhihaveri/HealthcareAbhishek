@@ -1,6 +1,3 @@
-Flask
-scikit-learn
-tensorflow
-numpy
-pandas
-joblib
+version https://git-lfs.github.com/spec/v1
+oid sha256:93f03de99bfc9a38bf70b947c17b97d64f1e661923e41b3b5fe0e27846a6072e
+size 64

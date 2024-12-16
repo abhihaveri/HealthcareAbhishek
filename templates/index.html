@@ -33,6 +33,13 @@
             margin-bottom: 30px;
             font-size: 28px;
         }
+        .note {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 16px;
+            color: #3498db;
+            font-weight: bold;
+        }
         .form-group {
             margin-bottom: 25px;
         }
@@ -97,6 +104,7 @@
 <body>
     <div class="container">
         <h2>Disease Prediction Tool</h2>
+        <div class="note">Please select 2 to 3 symptoms as Yes for better predictions.</div>
         <form id="prediction-form" method="POST" action="/predict">
             {% for column in column_names %}
                 <div class="form-group">
@@ -132,7 +140,9 @@
             resultDiv.innerHTML = `
                 <h3>Predictions:</h3>
                 <p><strong>Random Forest:</strong> ${result.rf_prediction}</p>
+                <p><strong>Description:</strong> ${result.rf_prediction_description}</p>
                 <p><strong>Deep Learning:</strong> ${result.dl_prediction}</p>
+                <p><strong>Description:</strong> ${result.dl_prediction_description}</p>
             `;
             resultDiv.classList.add('show');
         });

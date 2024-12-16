@@ -1,0 +1,6 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'us-central1-docker.pkg.dev/healthcareproject-thesis/flask-app-healthcare-docker-repo/healthcare-flask-app-image:tag1', '.']
+
+images:
+  - 'us-central1-docker.pkg.dev/healthcareproject-thesis/flask-app-healthcare-docker-repo/healthcare-flask-app-image:tag1'
